@@ -44,8 +44,15 @@ class User extends Controller
 
   public function edit_user($id)
   {
-    $user['user'] = $this->User_model->getUserById($id);
-    $this->call->view('edit_user_page', $user);
+    $user = $this->User_model->getUserById($id);
+
+    if ($user) {
+      echo json_encode(['status' => 'success', 'user' => $user]);
+    } else {
+      echo json_encode(['status' => 'error', 'message' => 'User not found']);
+    }
+
+    header('Content-Type: application/json');
   }
 
   public function update_user($id)

@@ -59,13 +59,11 @@
   <header class="bg-primary text-white shadow-lg py-6 px-8">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">Users Dashboard</h1>
-      <button class="bg-secondary hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-md transition-colors text-lg font-semibold">
-        <a href="/user/create" class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-          </svg>
-          Add User
-        </a>
+      <button onclick="openAddUserModal()" class="bg-secondary hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-md transition-colors text-lg font-semibold flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Add User
       </button>
     </div>
   </header>
@@ -111,7 +109,113 @@
     </div>
   </div>
 
+  <!-- Add User Modal -->
+  <div id="addUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-lg w-full mx-4">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">Add New User</h3>
+      <form id="addUserForm" class="space-y-6">
+        <div>
+          <label for="add_last_name" class="block text-lg font-medium text-gray-700 mb-2">Last Name</label>
+          <input type="text" id="add_last_name" name="sps_last_name" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="add_first_name" class="block text-lg font-medium text-gray-700 mb-2">First Name</label>
+          <input type="text" id="add_first_name" name="sps_first_name" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="add_email" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="add_email" name="sps_email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="add_gender" class="block text-lg font-medium text-gray-700 mb-2">Gender</label>
+          <select id="add_gender" name="sps_gender" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="add_address" class="block text-lg font-medium text-gray-700 mb-2">Address</label>
+          <textarea id="add_address" name="sps_address" rows="3" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300"></textarea>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" onclick="closeAddUserModal()" class="px-6 py-3 text-lg font-semibold text-gray-700 bg-gray-200 rounded-lg">Cancel</button>
+          <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-primary rounded-lg">Add User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div id="editUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-lg w-full mx-4">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">Edit User</h3>
+      <form id="editUserForm" class="space-y-6">
+        <input type="hidden" id="edit_user_id">
+        <div>
+          <label for="edit_last_name" class="block text-lg font-medium text-gray-700 mb-2">Last Name</label>
+          <input type="text" id="edit_last_name" name="sps_last_name" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="edit_first_name" class="block text-lg font-medium text-gray-700 mb-2">First Name</label>
+          <input type="text" id="edit_first_name" name="sps_first_name" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="edit_email" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="edit_email" name="sps_email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        </div>
+        <div>
+          <label for="edit_gender" class="block text-lg font-medium text-gray-700 mb-2">Gender</label>
+          <select id="edit_gender" name="sps_gender" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="edit_address" class="block text-lg font-medium text-gray-700 mb-2">Address</label>
+          <textarea id="edit_address" name="sps_address" rows="3" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300"></textarea>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" onclick="closeEditUserModal()" class="px-6 py-3 text-lg font-semibold text-gray-700 bg-gray-200 rounded-lg">Cancel</button>
+          <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-primary rounded-lg">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    // Define fetchUsers function in the global scope
+    function fetchUsers() {
+      $.ajax({
+        url: '/user/get_all',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          const dataTable = $('#userTable').DataTable();
+          dataTable.clear();
+          if (data.users && data.users.length > 0) {
+            data.users.forEach(user => {
+              dataTable.row.add([
+                user.sps_first_name,
+                user.sps_last_name,
+                user.sps_email,
+                user.sps_gender,
+                user.sps_address,
+                user.id
+              ]);
+            });
+          } else {
+            dataTable.row.add(['No users found', '', '', '', '', '']);
+          }
+          dataTable.draw();
+        },
+        error: function() {
+          alert('Failed to fetch users.');
+        }
+      });
+    }
     $(document).ready(function() {
       const dataTable = $('#userTable').DataTable({
         dom: '<"flex flex-col md:flex-row justify-between items-center mb-6"f<"flex items-center gap-4"l<"text-gray-500"i>>>rt<"flex flex-col md:flex-row justify-between items-center mt-6"p>',
@@ -126,51 +230,52 @@
           orderable: false,
           render: function(data, type, row) {
             return `
-                            <div class="flex gap-4">
-                                <a href="/user/edit/${row[5]}" class="text-primary hover:text-indigo-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                </a>
-                                <button onclick="openModal('${row[5]}')" class="text-red-500 hover:text-red-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        `;
+                <div class="flex gap-4">
+                    <button onclick="openEditUserModal('${row[5]}')" class="text-primary hover:text-indigo-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                    </button>
+
+                    <button onclick="openModal('${row[5]}')" class="text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            `;
           }
         }]
       });
 
-      function fetchUsers() {
-        $.ajax({
-          url: '/user/get_all',
-          type: 'GET',
-          dataType: 'json',
-          success: function(data) {
-            dataTable.clear();
-            if (data.users && data.users.length > 0) {
-              data.users.forEach(user => {
-                dataTable.row.add([
-                  user.sps_first_name,
-                  user.sps_last_name,
-                  user.sps_email,
-                  user.sps_gender,
-                  user.sps_address,
-                  user.id
-                ]);
-              });
-            } else {
-              dataTable.row.add(['No users found', '', '', '', '', '']);
-            }
-            dataTable.draw();
-          },
-          error: function() {
-            alert('Failed to fetch users.');
-          }
-        });
-      }
+      // function fetchUsers() {
+      //   $.ajax({
+      //     url: '/user/get_all',
+      //     type: 'GET',
+      //     dataType: 'json',
+      //     success: function(data) {
+      //       dataTable.clear();
+      //       if (data.users && data.users.length > 0) {
+      //         data.users.forEach(user => {
+      //           dataTable.row.add([
+      //             user.sps_first_name,
+      //             user.sps_last_name,
+      //             user.sps_email,
+      //             user.sps_gender,
+      //             user.sps_address,
+      //             user.id
+      //           ]);
+      //         });
+      //       } else {
+      //         dataTable.row.add(['No users found', '', '', '', '', '']);
+      //       }
+      //       dataTable.draw();
+      //     },
+      //     error: function() {
+      //       alert('Failed to fetch users.');
+      //     }
+      //   });
+      // }
 
       fetchUsers();
 
@@ -203,3 +308,146 @@
       });
     });
   </script>
+
+  <script>
+    // Open Add User Modal
+    function openAddUserModal() {
+      $('#addUserModal').removeClass('hidden');
+    }
+
+    // // Open Edit User Modal and Populate Data
+    // function openEditUserModal(userId) {
+    //   $.ajax({
+    //     url: '/user/edit/' + userId, // Adjust your API endpoint to fetch user details
+    //     type: 'GET',
+    //     success: function(response) {
+    //       // Parse and check the response
+    //       if (response.status === 'success') {
+    //         const user = response.user; // Extract the user object
+    //         console.log(user);
+
+    //         // Populate the form fields in the modal with user data
+    //         $('#edit_last_name').val(user.sps_last_name);
+    //         $('#edit_first_name').val(user.sps_first_name);
+    //         $('#edit_email').val(user.sps_email);
+    //         $('#edit_gender').val(user.sps_gender);
+    //         $('#edit_address').val(user.sps_address);
+
+    //         // Store the user ID for submission
+    //         $('#edit_user_id').val(user.id);
+
+    //         // Show the modal
+    //         $('#editUserModal').removeClass('hidden');
+    //       } else {
+    //         alert(response.message || 'Failed to fetch user data.');
+    //       }
+    //     },
+    //     error: function() {
+    //       alert('Failed to fetch user data.');
+    //     }
+    //   });
+    // }
+
+    function openEditUserModal(userId) {
+      $.ajax({
+        url: '/user/edit/' + userId, // Adjust your API endpoint to fetch user details
+        type: 'GET',
+        success: function(response) {
+          if (response.status === 'success') {
+            const user = response.user;
+
+            // Populate the form fields
+            $('#edit_last_name').val(user.sps_last_name);
+            $('#edit_first_name').val(user.sps_first_name);
+            $('#edit_email').val(user.sps_email);
+            $('#edit_gender').val(user.sps_gender);
+            $('#edit_address').val(user.sps_address);
+
+            // Correctly store the user ID in the modal
+            $('#editUserModal').data('userId', userId);
+
+            // Show the modal
+            $('#editUserModal').removeClass('hidden');
+          } else {
+            alert(response.message || 'Failed to fetch user data.');
+          }
+        },
+        error: function() {
+          alert('Failed to fetch user data.');
+        },
+      });
+    }
+
+    $('#addUserForm').on('submit', function(e) {
+      e.preventDefault();
+
+      var formData = $(this).serialize();
+
+      $.ajax({
+        url: '/user/create',
+        type: 'POST',
+        data: formData,
+        success: function() {
+          $('#addUserModal').addClass('hidden');
+          fetchUsers();
+        },
+        error: function() {
+          alert('Failed to add user.');
+        }
+      });
+    });
+
+    $('#editUserForm').on('submit', function(e) {
+      e.preventDefault();
+
+      var formData = $(this).serialize();
+      var userId = $('#editUserModal').data('userId');
+
+      $.ajax({
+        url: '/user/update/' + userId,
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          $('#editUserModal').addClass('hidden');
+          fetchUsers();
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error:', status, error);
+          alert('Failed to update user.');
+        }
+      });
+    });
+
+
+
+
+
+
+    // Close Add User Modal
+    function closeAddUserModal() {
+      const modal = document.getElementById('addUserModal');
+      modal.classList.add('hidden');
+    }
+
+    // Close Edit User Modal
+    function closeEditUserModal() {
+      const modal = document.getElementById('editUserModal');
+      modal.classList.add('hidden');
+    }
+
+    // Optional: Close modal when clicking outside of the modal content
+    window.addEventListener('click', function(event) {
+      // Check if the click target is the modal overlay (background)
+      if (event.target === document.getElementById('addUserModal')) {
+        closeAddUserModal();
+      }
+      if (event.target === document.getElementById('editUserModal')) {
+        closeEditUserModal();
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>
